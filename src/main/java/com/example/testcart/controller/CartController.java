@@ -18,11 +18,16 @@ public class CartController {
     @Autowired
     private BookService bookService;
 
+
+    //List card
     @GetMapping(value = "/listCard")
     public String index(Model model,HttpSession session){
         model.addAttribute("total",totalPrice(session));
         return "cart";
     }
+
+
+    //Update số lượng sách order mỗi loại.
     @PostMapping(value = "/update")
     public String update(HttpServletRequest request,HttpSession session){
 
@@ -34,6 +39,9 @@ public class CartController {
         session.setAttribute("cart",cart);
         return "redirect:/cart/listCard";
     }
+
+
+    //Xóa giỏ hàng(Xóa order của mỗi cuốn sách riêng)
     @GetMapping(value = "/remove/{id}")
     public String deleteCart(@PathVariable("id") long id, HttpSession session){
         List<Item> cart = (List<Item>) session.getAttribute("cart");
@@ -42,6 +50,9 @@ public class CartController {
         session.setAttribute("cart",cart);
         return "redirect:/cart/listCard";
     }
+
+
+    //Thêm sách vào giỏ hàng
     @GetMapping(value = "/buy/{id}")
     public String addCart(@PathVariable("id") long id, HttpSession session){
         if(session.getAttribute("cart") == null){
@@ -62,6 +73,9 @@ public class CartController {
         }
         return "redirect:/cart/listCard";
     }
+
+
+    //kiểm tra tồn tại của 1 cuốn sách đã order trong cart
     private int isExists(long id,List<Item> cart){
         for (int i=0;i<cart.size();i++){
             if(cart.get(i).getBook().getId() ==id){
@@ -70,6 +84,7 @@ public class CartController {
         }
         return -1;
     }
+    //Tổng tiền của 1 cart.
     private double totalPrice(HttpSession session){
         List<Item> cart = (List<Item>) session.getAttribute("cart");
         double total=0;

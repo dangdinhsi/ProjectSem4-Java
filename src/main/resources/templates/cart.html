@@ -7,16 +7,16 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Card Info</h1>
+<h1>Đây là view giỏ hàng</h1>
 <form method="post" th:action="${'/cart/update'}">
     <table border="1">
         <tr>
             <th>id</th>
             <th>name</th>
             <th>price</th>
-            <th>Quantity</th>
+            <th>Quantity<input type="submit" value="UPDATE"></th>
             <th>Sub total</th>
-            <th><input type="submit" value="UPDATE"></th>
+            <th></th>
         </tr>
         <tr th:each="item :${session.cart}">
             <td th:text="${item.book.id}"></td>
@@ -34,6 +34,6 @@
         </tr>
     </table>
 </form>
-<h4><a th:href="@{/book/list}">Back list</a></h4>
+<h4><a th:href="@{/book/list}">Back list book,continue order</a></h4>
 </body>
 </html>
